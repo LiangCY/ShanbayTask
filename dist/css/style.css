@@ -1,0 +1,19 @@
+.my-pagination {
+    position: fixed;
+    height: 50px;
+    width: 100%;
+    background: #CCC;
+    bottom: 0;
+    text-align: center;
+}
+
+.my-pagination-item {
+    display: inline-block;
+    border: 1px solid #5566CC;
+    border-radius: 4px;
+    margin: 9px 1px;
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
+    box-sizing: border-box;
+}

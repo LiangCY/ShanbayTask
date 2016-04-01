@@ -12,9 +12,13 @@
       "matches": [
         "http://www.theguardian.com/*/*"
       ],
+      "css": [
+        "css/style.css"
+      ],
       "js": [
         "js/script.js"
-      ]
+      ],
+      "run_at": "document_start"
     }
   ],
   "permissions": [
