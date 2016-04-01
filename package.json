@@ -1,0 +1,13 @@
+{
+  "name": "shanbay-task",
+  "version": "1.0.0",
+  "description": "shanby front-end task",
+  "author": "lcy",
+  "dependencies": {
+    "jquery": "^2.2.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1"
+  }
+}
