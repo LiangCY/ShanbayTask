@@ -25,35 +25,4 @@ $(function () {
     }
   });
 
-  // var height = 0;
-  //
-  // height += $('header.content__head')[0].offsetHeight;
-  //
-  // var $figures = $('#article').find('figure');
-  //
-  // var pageHeight = document.documentElement.clientHeight - 80;
-  //
-  // var totalHeight = document.body.offsetHeight;
-  //
-  // $.each($figures, function (index, figure) {
-  //   console.log($(figure).offset().top);
-  //   console.log(figure.offsetHeight);
-  //   console.log($(figure).offset().top + figure.offsetHeight);
-  //
-  //   var figureTopOffsetTop = $(figure).offset().top;
-  //   var figureBottomOffsetTop = figureTopOffsetTop + figure.offsetHeight;
-  //
-  //   console.log(height);
-  //   console.log(pageHeight);
-  //
-  //   console.log(height + figureTopOffsetTop);
-  //   console.log(height + figureBottomOffsetTop);
-  //
-  //   if (Math.floor((height + figureTopOffsetTop) / pageHeight) !== Math.floor((height + figureBottomOffsetTop) / pageHeight)) {
-  //     $(figure).offset({top: Math.floor((height + figureTopOffsetTop) / pageHeight + 1) * pageHeight});
-  //
-  //   }
-  //
-  // });
-
 });
