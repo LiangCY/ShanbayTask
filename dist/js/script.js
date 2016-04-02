@@ -9953,14 +9953,16 @@ $(window).on('load', function () {
    * 单词查询弹窗
    */
   $('body').append($wordTip);
-  $wordTip.on('click', function () {
-    $wordTip.css('visibility', 'hidden');
-  });
-  $wordTipSpeaker.on('click', function () {
-    var audio = $audio.get(0);
-    if (audio.src) {
-      audio.play();
+  $wordTip.on('click', function (e) {
+    if ($(e.target).hasClass('speaker')) {
+      var audio = $audio.get(0);
+      if (audio.src) {
+        audio.play();
+      }
+    } else {
+      $wordTip.css('visibility', 'hidden');
     }
+
   });
 
   var pageTops = anchors.map(function (anchor) {
