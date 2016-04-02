@@ -153,7 +153,6 @@ $(window).on('load', function () {
 
 function showTip(h, v, $word, result) {
   var wordOffset = $word.offset();
-  var wordWidth = $word.outerWidth();
   if (result.status_code === 0) {
     var data = result.data;
     var audio = data.audio;
