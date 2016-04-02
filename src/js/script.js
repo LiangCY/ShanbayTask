@@ -1,4 +1,21 @@
 var $ = require('jquery');
+var anchors = [];
+var SEARCH_WORD_URL = "https://www.shanbay.com/api/v1/bdc/search/?word=";
+
+var pageHeight = document.documentElement.clientHeight;
+var pageWidth = document.documentElement.clientWidth;
+
+var $wordTip = $("<div class='word-tip'><div></div></div>");
+var $wordTipHeader = $("<div class='header'></div>");
+var $wordTipSpeaker = $("<div class='speaker'></div>");
+var $wordTipTitle = $("<div class='title'></div>");
+$wordTipHeader.append($wordTipSpeaker);
+$wordTipHeader.append($wordTipTitle);
+var $wordTipContent = $("<div class='definition'></div>");
+var $audio = $("<audio></audio>");
+$wordTip.append($wordTipHeader);
+$wordTip.append($wordTipContent);
+$wordTip.append($audio);
 
 $(function () {
   var $body = $('body');
@@ -68,7 +85,7 @@ $(function () {
   /**
    * 获取页码并添加
    */
-  var anchors = genPagination();
+  anchors = genPagination();
   for (var i = 1; i <= anchors.length; i++) {
     $pagination.append("<span class='my-pagination-item'>" + i + "</span>");
   }
@@ -79,11 +96,84 @@ $(function () {
 });
 
 $(window).on('load', function () {
+  /**
+   * 到第一页
+   */
   setTimeout(function () {
     scrollTo(0, 0);
     $('.my-pagination .my-pagination-item:first-child').addClass('active');
   }, 0);
+
+  $('body').append($wordTip);
+  $wordTip.on('click', function () {
+    $wordTip.css('visibility', 'hidden');
+  });
+  $wordTipSpeaker.on('click', function () {
+    var audio = $audio.get(0);
+    if (audio.src) {
+      audio.play();
+    }
+  });
+
+  var pageTops = anchors.map(function (anchor) {
+    return anchor.offset().top - 2;
+  });
+  console.log(pageTops);
+
+  $('#article').find('span').on('click', function () {
+
+    $wordTip.css('visibility', 'hidden');
+
+    var $word = $(this);
+    var offset = $word.offset();
+    var word = $word.text();
+    for (var i = 0, len = pageTops.length; i < len; i++) {
+      if (offset.top < pageTops[i]) {
+        break;
+      }
+    }
+    var pageTop = pageTops[i - 1];
+    var pageBottom = pageTop + pageHeight - 54;
+    var deltaTop = offset.top - pageTop;
+    var deltaBottom = pageBottom - offset.top;
+    var deltaLeft = offset.left;
+    var deltaRight = pageWidth - deltaLeft;
+    var h = deltaLeft > deltaRight ? 'left' : 'right';
+    var v = deltaTop > deltaBottom ? 'top' : 'bottom';
+    $.ajax(SEARCH_WORD_URL + word, {
+      success: function (data) {
+        showTip(h, v, $word, data);
+      },
+      error: function () {
+        showTip(h, v, $word, {msg: "请求失败"});
+      }
+    });
+  });
 });
+
+function showTip(h, v, $word, result) {
+  var wordOffset = $word.offset();
+  var wordWidth = $word.outerWidth();
+  if (result.status_code === 0) {
+    var data = result.data;
+    var audio = data.audio;
+    $wordTipTitle.text(data.content);
+    $wordTipSpeaker.text("发音");
+    $wordTipContent.text(data.definition);
+    $audio.attr('src', audio);
+  } else {
+    $wordTipTitle.text("");
+    $wordTipSpeaker.text("");
+    $wordTipContent.text(result.msg);
+  }
+  var tipWidth = $wordTip.outerWidth();
+  var tipHeight = $wordTip.outerHeight();
+  $wordTip.offset({
+    left: h == 'left' ? wordOffset.left - tipWidth : wordOffset.left,
+    top: v == 'top' ? wordOffset.top - tipHeight : wordOffset.top
+  });
+  $wordTip.css('visibility', 'visible');
+}
 
 function genPagination() {
   var $header = $('header.content__head');
@@ -91,9 +181,6 @@ function genPagination() {
 
   var anchors = [];
   anchors.push($header);
-
-  var pageHeight = document.documentElement.clientHeight;
-  var pageWidth = document.documentElement.clientWidth;
 
   $('.content__article-body').css('padding-bottom', pageHeight + 'px');
   $('.content__article-body span').css('display', 'inline-block');

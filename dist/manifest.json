@@ -21,6 +21,7 @@
     }
   ],
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "https://www.shanbay.com/api/v1/bdc/search/"
   ]
 }
