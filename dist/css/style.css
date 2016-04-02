@@ -2,18 +2,27 @@
     position: fixed;
     height: 50px;
     width: 100%;
-    background: #CCC;
+    background: #DDD;
     bottom: 0;
     text-align: center;
+    z-index: 999;
 }
 
 .my-pagination-item {
     display: inline-block;
-    border: 1px solid #5566CC;
-    border-radius: 4px;
-    margin: 9px 1px;
+    margin: 9px 0;
     height: 32px;
     width: 32px;
     line-height: 32px;
     box-sizing: border-box;
+    color: #666;
+}
+
+.my-pagination-item.active {
+    font-weight: bolder;
+    color: #222;
+}
+
+.my-pagination-item:not(:first-child) {
+    border-left: 1px solid #BBB;
 }
