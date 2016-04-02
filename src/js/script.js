@@ -104,6 +104,9 @@ $(window).on('load', function () {
     $('.my-pagination .my-pagination-item:first-child').addClass('active');
   }, 0);
 
+  /**
+   * 单词查询弹窗
+   */
   $('body').append($wordTip);
   $wordTip.on('click', function () {
     $wordTip.css('visibility', 'hidden');
@@ -118,12 +121,9 @@ $(window).on('load', function () {
   var pageTops = anchors.map(function (anchor) {
     return anchor.offset().top - 2;
   });
-  console.log(pageTops);
 
   $('#article').find('span').on('click', function () {
-
     $wordTip.css('visibility', 'hidden');
-
     var $word = $(this);
     var offset = $word.offset();
     var word = $word.text();
@@ -132,6 +132,9 @@ $(window).on('load', function () {
         break;
       }
     }
+    /**
+     * 计算弹窗位置
+     */
     var pageTop = pageTops[i - 1];
     var pageBottom = pageTop + pageHeight - 54;
     var deltaTop = offset.top - pageTop;
